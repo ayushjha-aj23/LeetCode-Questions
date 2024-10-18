@@ -17,7 +17,7 @@ class Solution {
         return maxProfit;
         */
 
-        // Method 2: Optimised Approach 
+        // Method 2: Optimised Approach - TC - O(N)
 
         // Find the minimum and check the corresponding profit from it 
         int minPrice = Integer.MAX_VALUE;
