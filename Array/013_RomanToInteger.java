@@ -1,4 +1,7 @@
 class Solution {
+
+    // Method 1: Naive Approach
+    /*
     public int romanToInt(String s) {
         int total = 0;
         int preValue = 0;
@@ -31,4 +34,35 @@ class Solution {
             default: return 0;
         }
     }
+    */
+
+    // Method 2: Using Map
+    public int romanToInt(String s) {
+
+        Map<Character, Integer> romanMap = new HashMap<>();
+        romanMap.put('I', 1);
+        romanMap.put('V', 5);
+        romanMap.put('X', 10);
+        romanMap.put('L', 50);
+        romanMap.put('C', 100);
+        romanMap.put('D', 500);
+        romanMap.put('M', 1000);
+
+        int total = 0;
+        int prevValue = 0;
+
+        for (char c : s.toCharArray()) {
+            int value = romanMap.get(c);
+
+            if (value > prevValue) {
+                total += value - 2 * prevValue; // Subtract twice the previous value
+            } else {
+                total += value;
+            }
+            prevValue = value;
+        }
+
+        return total;
+    }
+
 }
