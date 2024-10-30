@@ -32,7 +32,7 @@ class Solution {
     }
     */
 
-    // 
+    // Storing in HashSet to get only unique count
     public int findPairs(int[] nums, int K) {
         if (K < 0) return 0; // Absolute difference cannot be negative
 
