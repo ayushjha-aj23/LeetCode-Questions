@@ -1,27 +1,27 @@
 class Solution {
 
-    // Method 1: Naive Approach
+    // Naive Approach - Using Switch 
+    // Use switch to get Roman values directly.
     /*
     public int romanToInt(String s) {
+        
         int total = 0;
         int preValue = 0;
+        int value = 0;
 
-        for(int i=s.length()-1;i>=0;i--){
-            char c = s.charAt(i);
-            int value = getRoman(c);
-
+        for(int i=s.length()-1; i>=0; i--){
+            value = getInt(s.charAt(i));
             if(value<preValue)
-                total -= value; // Subtract if the current value is less than previous
-            else
-                total += value; // Otherwise, add it
-            
+                total -= value;
+            else 
+                total += value;
+
             preValue = value;
         }
-
         return total;
     }
 
-    private int getRoman(char c){
+    private int getInt(char c){
         switch(c){
             case 'I': return 1;
             case 'V': return 5;
@@ -36,33 +36,75 @@ class Solution {
     }
     */
 
-    // Method 2: Using Map
+    // Optimised Using HashMap - Right to Left  
+    // Start from the end of the string.
+    // Keep track of the  last seen value.
+    // If current value < last value → subtract
+    // else → add.
+    
     public int romanToInt(String s) {
+        
+        HashMap<Character, Integer> hashMap = new HashMap<>();
 
-        Map<Character, Integer> romanMap = new HashMap<>();
-        romanMap.put('I', 1);
-        romanMap.put('V', 5);
-        romanMap.put('X', 10);
-        romanMap.put('L', 50);
-        romanMap.put('C', 100);
-        romanMap.put('D', 500);
-        romanMap.put('M', 1000);
+        hashMap.put('I', 1);
+        hashMap.put('V', 5);
+        hashMap.put('X', 10);
+        hashMap.put('L', 50);
+        hashMap.put('C', 100);
+        hashMap.put('D', 500);
+        hashMap.put('M', 1000);
 
         int total = 0;
-        int prevValue = 0;
+        int value = 0;
+        int preValue = 0;
 
-        for (char c : s.toCharArray()) {
-            int value = romanMap.get(c);
+        for(int i=s.length()-1; i>=0; i--){
+            value = hashMap.get(s.charAt(i));
 
-            if (value > prevValue) {
-                total += value - 2 * prevValue; // Subtract twice the previous value
-            } else {
+            if(value<preValue)
+                total -= value;
+            else
                 total += value;
-            }
-            prevValue = value;
+            
+            preValue = value;
         }
 
         return total;
     }
+    
 
+    // Optimised Using HashMap - Left to Right  
+    // For each character, compare with the next one.
+    // If current < next → subtract current.
+    // Else → add current.
+    /*
+    public int romanToInt(String s) {
+        
+        HashMap<Character, Integer> hashMap = new HashMap<>();
+
+        hashMap.put('I', 1);
+        hashMap.put('V', 5);
+        hashMap.put('X', 10);
+        hashMap.put('L', 50);
+        hashMap.put('C', 100);
+        hashMap.put('D', 500);
+        hashMap.put('M', 1000);
+
+        int total = 0;
+        int currentValue = 0;
+        // int preValue = 0;
+
+        for(int i=0; i<s.length(); i++){
+            value = hashMap.get(s.charAt(i));
+
+            // Next in Range && currentValue < nextValue
+            if(i+1 < s.length() && currentValue<hashMap.get(s.charAt(i+1)))
+                total -= value;
+            else
+                total += value;
+        }
+
+        return total;
+    }
+    */
 }
